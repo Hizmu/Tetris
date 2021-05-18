@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -9,67 +10,87 @@ using System.Windows.Forms;
 
 namespace Tetris
 {
-    class Cell
-    {
-        Cell(int pointX, int pointY)
-        {
-            this.pointX = pointX;
-            this.pointY = pointY;
-        }
-        public int pointX {get;set;}
-        public int pointY {get;set;}
-        public PictureBox image { get; set; }
-    }
+
     class Game
     {
-        int currentX;
-        int currentY;
+        int currentX = 0;
+        int currentY = 0;
         int gridWidth = Setting.gridWidth;
         int gridHeight = Setting.gridHeight;
-        int score;
-        int[,] grid;
-  //      Cell grid[,];
-        Shape currentShape;
-        Shape nextShape;
+        Cell[,] grid = null;
+        Shape currentShape  = null;
+        Shape nextShape = null;
         private static Game game;
         private static Tetris tetris;
-
+        private static Score score;
+        public bool Autoplay { get; set; }
         private Game()
         {
-            grid = new int[gridWidth, gridHeight];
+            grid = new Cell[gridWidth, gridHeight];
+            for (int i = 0; i < gridWidth; i++)
+                for (int j = 0; j < gridHeight; j++)
+                    grid[i, j] = new Cell();
             LoadImage.LoadBlocksFromImage();
         }
+
         public void Start()
         {
-
             tetris.timer.Tick += game.Time_Tick;
-            tetris.timer.Interval = 1000;
+            if (Autoplay)
+                tetris.timer.Interval = Setting.autoGameSpeed;
+            else
+            {
+                tetris.timer.Interval = Setting.startSpeed;
+            }
             tetris.KeyDown += game.Key_Down;
             currentShape = getRandomShapeCenter();
             nextShape = getNextShape();
-            InitRandomShape();
+            currentShape.AddToControls(tetris);
+        }
+        public void Restart()
+        {
+            tetris.timer.Stop();
+            currentShape.RemoveFromControl(tetris);
+            nextShape.RemoveFromControl(tetris);
+            ClearGrid();
 
+            currentShape = getRandomShapeCenter();
+            nextShape = getNextShape();
+            currentShape.AddToControls(tetris);
+            tetris.timer.Start();
+        }
+        private void ClearGrid()
+        {
+            for (int i = 0; i < gridWidth; i++)
+                for (int j = 0; j < gridHeight; j++) {
+                    grid[i, j].num = 0;
+                    if (grid[i, j].image != null)
+                    {
+                        tetris.Controls.Remove(grid[i, j].image);
+                        grid[i, j].image = null;
+                    }
+                }
         }
         public void Time_Tick(object sender, EventArgs e)
         {
             if (!moveShapeIfPossible(moveDown: 1))
             {
-                updateCanvasDotArrayWithCurrentShape();
+                nextShape.Hide();
+                updateGridWithCurrentShape();
                 currentShape = nextShape;
                 nextShape = getNextShape();
                 clearFilledRowsAndUpdateScore();
-                InitRandomShape();
+
             }
         }
-        public static Game GetInstance(Tetris tetris)
+        public static Game GetInstance(Tetris tetris,Score score)
         {
             if (game == null)
             {
                 game = new Game();
+                Game.score = score;
                 Game.tetris = tetris;
-
             }
-
             return game;
         }
 
@@ -87,7 +108,9 @@ namespace Tetris
                 for (int j = 0; j < currentShape.Height; j++)
                 {
                     if (newY + j > 0 && grid[newX + i, newY + j] == 1 && currentShape.Blocks[j, i] == 1)
+                    {
                         return false;
+                    }
                 }
             }
 
@@ -108,7 +131,7 @@ namespace Tetris
                 {
                     if (currentShape.Blocks[j, i] == 1)
                     {
-                        currentShape.imgBlocks[k].Location = new Point((currentX + i) * Setting.blockSize, (currentY + j) * Setting.blockSize);
+                        currentShape.imgBlocks[k].Location = new Point(Setting.startpositionX + (currentX + i) * Setting.blockSize, Setting.startpositionY +(currentY + j) * Setting.blockSize);
                         if (currentShape.imgBlocks[k].Location.Y >= 0)
                         {
                             currentShape.imgBlocks[k].Visible = true;
@@ -118,15 +141,9 @@ namespace Tetris
                 }
             }
         }
-        public void InitRandomShape()
+        private void updateGridWithCurrentShape()
         {
-            foreach (var imgblock in currentShape.imgBlocks)
-            {
-                tetris.Controls.Add(imgblock);
-            }
-        }
-        private void updateCanvasDotArrayWithCurrentShape()
-        {
+            int k = 0;
             for (int i = 0; i < currentShape.Width; i++)
             {
                 for (int j = 0; j < currentShape.Height; j++)
@@ -135,24 +152,37 @@ namespace Tetris
                     {
                         if (checkIfGameOver())
                             return;
-                        grid[currentX + i, currentY + j] = 1;
+                        grid[currentX + i, currentY + j].num = 1;
+                        grid[currentX + i, currentY + j].image = currentShape.imgBlocks[k];
+                        k++;
                     }
                 }
             }
         }
         private bool checkIfGameOver()
         {
-            if (currentY < 0)
+            if (currentY <= -1)
             {
                 tetris.timer.Stop();
-                MessageBox.Show("Game Over");
-                Application.Exit();
+                if (Autoplay == false)
+                {
+                    MessageBox.Show(tetris,"Game Over");
+                    Autoplay = true;
+               //     score.PushScore();
+                    Restart();
+                    tetris.Main();
+                }
+                else
+                {
+                    this.Restart();
+                }
                 return true;
             }
             return false;
         }
         public void Key_Down(object sender, KeyEventArgs e)
         {
+
             var verticalMove = 0;
             var horizontalMove = 0;
             switch (e.KeyCode)
@@ -174,13 +204,35 @@ namespace Tetris
                 case Keys.Up:
                     currentShape.turn();
                     break;
+                case Keys.Escape:
+                    tetris.timer.Stop();
+                    Pause();
+                    tetris.Opacity = 1;
+                    return;
             }
             if (!moveShapeIfPossible(horizontalMove, verticalMove) && (e.KeyCode == Keys.Up || e.KeyCode == Keys.Space || e.KeyCode == Keys.W))
             {
                 currentShape.rollback();
             }
         }
+        public void Pause()
+        {
+            PauseMenu pauseMenu = new PauseMenu();
+            tetris.Opacity = .80;
+            switch(pauseMenu.ShowDialog())
+            {
+                case DialogResult.OK:
+                    tetris.timer.Start();
+                    return;
+                case DialogResult.Cancel:
+                    Application.Exit();
+                    return;             
+                case DialogResult.Abort:
+                    Application.Exit();
+                    return;
 
+            }
+        }
         public void clearFilledRowsAndUpdateScore()
         {
             for (int i = 0; i < gridHeight; i++)
@@ -197,30 +249,26 @@ namespace Tetris
 
                     score += 100;
                     tetris.lbScore.Text = "Score: " + score;
-                    tetris.lbLevel.Text = "Level: " + score / 1000;
+                    tetris.lbLevel.Text = "Level: " + score.score / 100;
 
-                    tetris.timer.Interval -= 10;
+                    tetris.timer.Interval -= (int)Setting.Difficult;
 
-
+                    for (j = 0; j < gridWidth; j++)
+                    {
+                        grid[j, i].image.Dispose();
+                    }
                     for (j = 0; j < gridWidth; j++)
                     {
                         for (int k = i; k > 0; k--)
                         {
+
                             grid[j, k] = grid[j, k - 1];
-                            if()
+                            if(grid[j,k].image != null)
+                            grid[j, k].image.Location = new Point(Setting.startpositionX + j * Setting.blockSize, Setting.startpositionY + k * Setting.blockSize);
                         }
 
-                        grid[j, 0] = 0;
+                        grid[j, 0].num = 0;
                     }
-
-                }
-
-            }
-            for (int i = 0; i < gridWidth; i++)
-            {
-                for (int j = 0; j < gridHeight; j++)
-                {
-                    
                 }
             }
 
@@ -228,17 +276,34 @@ namespace Tetris
         private Shape getRandomShapeCenter()
         {
             var shape = ShapesHandler.GetRandomShape();
-            currentX = 5;
+            currentX = (int)Math.Floor((double)gridWidth/2.0f);
+            if(currentShape == null)
             currentY = -shape.Height;
-            foreach(var imgblock in shape.imgBlocks)
-            {
-                this.pictureBoxes.Add(imgblock);
-            }
+                else
+            currentY = -currentShape.Height;
             return shape;
         }
+
         public Shape getNextShape()
         {
-            return getRandomShapeCenter();
+            int k = 0;
+            var shape = getRandomShapeCenter();
+            for (int i = 0; i < shape.Width; i++)
+            {
+                for (int j = 0; j < shape.Height; j++)
+                {
+                    if (shape.Blocks[j, i] == 1)
+                    {
+                        shape.imgBlocks[k].Location = new Point( tetris.lbNext.Location.X + Setting.blockSize * i, Setting.blockSize + tetris.lbNext.Location.Y + Setting.blockSize * j);
+
+                        k++;
+                    }
+                    
+                }
+            }
+            shape.Show();
+            shape.AddToControls(tetris);
+            return shape;
         }
 
     }

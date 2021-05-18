@@ -10,28 +10,16 @@ using System.Windows.Forms;
 
 namespace Tetris
 {
-    public partial class Tetris : Form
+    public partial class MainMenu : Form
     {
-        Game game;
-        public Tetris()
+        public MainMenu()
         {
             InitializeComponent();
-
-
-
-
         }
 
-        private void Tetris_Load(object sender, EventArgs e)
+        private void btStart_Click(object sender, EventArgs e)
         {
-            game = Game.GetInstance(this);
-
-            game.Start();
-        }
-
-        private void Tetris_Shown(object sender, EventArgs e)
-        {
-            timer.Start();
+            Tetris.Nickname = tbName.Text;
         }
     }
 }

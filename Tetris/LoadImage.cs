@@ -19,6 +19,7 @@ namespace Tetris
     static class LoadImage
     {
         public static Dictionary<ColorBlock, Bitmap> standartblocks { get; private set; }
+    
         public static void LoadBlocksFromImage()
         {
             LoadImage.standartblocks = new Dictionary<ColorBlock, Bitmap>();

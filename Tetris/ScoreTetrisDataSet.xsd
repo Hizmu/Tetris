@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ScoreTetrisDataSet" targetNamespace="http://tempuri.org/ScoreTetrisDataSet.xsd" xmlns:mstns="http://tempuri.org/ScoreTetrisDataSet.xsd" xmlns="http://tempuri.org/ScoreTetrisDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ScoreTetrisConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ScoreTetrisConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Tetris.Properties.Settings.GlobalReference.Default.ScoreTetrisConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ScoreTetrisViewTableAdapter" GeneratorDataComponentClassName="ScoreTetrisViewTableAdapter" Name="ScoreTetrisView" UserDataComponentName="ScoreTetrisViewTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="ScoreTetrisConnectionString (Settings)" DbObjectName="ScoreTetris.dbo.ScoreTetrisView" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT Nickname, Score FROM dbo.ScoreTetrisView</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Nickname" DataSetColumn="Nickname" />
+              <Mapping SourceColumn="Score" DataSetColumn="Score" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ScoreTetrisDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="ScoreTetrisDataSet" msprop:Generator_UserDSName="ScoreTetrisDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ScoreTetrisView" msprop:Generator_TableClassName="ScoreTetrisViewDataTable" msprop:Generator_TableVarName="tableScoreTetrisView" msprop:Generator_TablePropName="ScoreTetrisView" msprop:Generator_RowDeletingName="ScoreTetrisViewRowDeleting" msprop:Generator_RowChangingName="ScoreTetrisViewRowChanging" msprop:Generator_RowEvHandlerName="ScoreTetrisViewRowChangeEventHandler" msprop:Generator_RowDeletedName="ScoreTetrisViewRowDeleted" msprop:Generator_UserTableName="ScoreTetrisView" msprop:Generator_RowChangedName="ScoreTetrisViewRowChanged" msprop:Generator_RowEvArgName="ScoreTetrisViewRowChangeEvent" msprop:Generator_RowClassName="ScoreTetrisViewRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Nickname" msprop:Generator_ColumnVarNameInTable="columnNickname" msprop:Generator_ColumnPropNameInRow="Nickname" msprop:Generator_ColumnPropNameInTable="NicknameColumn" msprop:Generator_UserColumnName="Nickname" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Score" msprop:Generator_ColumnVarNameInTable="columnScore" msprop:Generator_ColumnPropNameInRow="Score" msprop:Generator_ColumnPropNameInTable="ScoreColumn" msprop:Generator_UserColumnName="Score" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
