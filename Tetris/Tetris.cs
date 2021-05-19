@@ -22,14 +22,14 @@ namespace Tetris
             SetStyle(ControlStyles.OptimizedDoubleBuffer
                 | ControlStyles.AllPaintingInWmPaint 
                 | ControlStyles.UserPaint, true);
+            this.DoubleBuffered = true;
             UpdateStyles();
 
         }
 
         private void Tetris_Load(object sender, EventArgs e)
         {
-            this.scoreTetrisViewTableAdapter.Fill(this.scoreTetrisDataSet.ScoreTetrisView);
-            this.DoubleBuffered = true;
+
             score = new Score(this);
             main = new MainMenu() {Owner = this };
             game = Game.GetInstance(this,score);

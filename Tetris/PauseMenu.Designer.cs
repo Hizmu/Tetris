@@ -36,7 +36,6 @@ namespace Tetris
             // 
             // btContinue
             // 
-
             this.btContinue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btContinue.BackColorAdditional = System.Drawing.Color.Magenta;
             this.btContinue.BackColorGradientEnabled = true;
@@ -64,10 +63,8 @@ namespace Tetris
             // 
             // btToMenu
             // 
-            
             this.btToMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-
-            this.btToMenu.BackColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(00)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btToMenu.BackColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btToMenu.BackColorGradientEnabled = true;
             this.btToMenu.BackColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
             this.btToMenu.BorderColor = System.Drawing.Color.Transparent;
@@ -122,7 +119,6 @@ namespace Tetris
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(175, 200);
             this.Controls.Add(this.btExit);
             this.Controls.Add(this.btToMenu);
@@ -134,7 +130,7 @@ namespace Tetris
             this.Text = "StopMenu";
             this.TransparencyKey = this.BackColor;
             this.ResumeLayout(false);
-            this.PerformLayout();
+
         }
 
         #endregion

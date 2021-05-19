@@ -15,6 +15,8 @@ namespace Tetris
         public PauseMenu()
         {
             InitializeComponent();
+            this.Focus();
+            Invalidate();
         }
     }
 }

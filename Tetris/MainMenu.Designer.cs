@@ -41,12 +41,11 @@ namespace Tetris
             // tbName
             // 
             this.tbName.BackColor = this.BackColor;
-            this.tbName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbName.ForeColor = System.Drawing.SystemColors.Window;
             this.tbName.Location = new System.Drawing.Point(68, 12);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(114, 22);
+            this.tbName.Size = new System.Drawing.Size(114, 29);
             this.tbName.TabIndex = 3;
             this.tbName.Text = "Player";
             this.tbName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbName_KeyPress);

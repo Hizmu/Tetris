@@ -87,7 +87,6 @@ namespace Tetris
                 clearFilledRowsAndUpdateScore();
 
             }
-            tetris.Refresh();
         }
         public static Game GetInstance(Tetris tetris,Score score)
         {
@@ -115,7 +114,6 @@ namespace Tetris
                 {
                     if (newY + j > 0 && grid[newX + i, newY + j] == 1 && currentShape.Blocks[j, i] == 1)
                     {
-
                         return false;
                     }
                 }
