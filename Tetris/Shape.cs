@@ -25,6 +25,7 @@ namespace Tetris
         public int count { get; set; }
         public int[,] Blocks{ get; set; }
         private int[,] backupBlocks { get; set; }
+
         public void InitPictureBox(PictureBox picture)
         {
             if (count == 0 || picture == null || picture.Image == null)

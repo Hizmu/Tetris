@@ -14,29 +14,43 @@ namespace Tetris
         {
             string Nickname = Tetris.Nickname;
             string cmd = null;
-            string queryString = "SELECT Nickname FROM dbo.ScoreTetris;";
-
-            cmd = $@"INSERT INTO dbo.Student VALUES ";
+            string queryString = "SELECT * FROM dbo.ScoreTetris;";
+            cmd = $@"INSERT INTO dbo.ScoreTetris VALUES('{Nickname}','{score}') ";
             using (SqlConnection connection = new SqlConnection(Setting.conn_Score))
             {
-                SqlCommand sqlCommand = new SqlCommand(queryString, connection);
                 connection.Open();
+                SqlCommand sqlCommand = new SqlCommand(queryString, connection);
                 SqlDataReader sqlData = sqlCommand.ExecuteReader();
                 while(sqlData.Read())
                 {
-                    IDataRecord dataRecord = (IDataRecord)sqlData[0];
-                    if (dataRecord.ToString() == Nickname)
+
+                    if ((string)sqlData.GetValue(0) == Nickname)
                     {
+
+                        if((int)sqlData.GetValue(1) >= score)
+                        {
+                            sqlData.Close();
+                            return;
+                        }
+                        sqlData.Close();
                         cmd = $@"UPDATE dbo.ScoreTetris SET
                         Score = '{score}'
-                        WHERE Nickname = {Nickname}";
+                        WHERE Nickname = '{Nickname}'";
+                        sqlCommand = new SqlCommand(cmd, connection);
+                        sqlCommand.ExecuteNonQuery();
+                        return;
                     }
                 }
+                sqlData.Close();
+                sqlCommand = new SqlCommand(cmd, connection);
+                sqlCommand.ExecuteNonQuery();
 
-                connection.Close();
             }
         }
-
+        public void Clear()
+        {
+            score = 0;
+        }
         public static Score operator +(Score score,int num)
         {
             score.score += num;
@@ -51,6 +65,7 @@ namespace Tetris
         {
             tetris.dgvScore.Visible = true;
             tetris.btCloseScore.Visible = true;
+            tetris.btCloseScore.BringToFront();
         }
         public void HideScore()
         {

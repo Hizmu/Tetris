@@ -19,12 +19,17 @@ namespace Tetris
         public Tetris()
         {
             InitializeComponent();
+            SetStyle(ControlStyles.OptimizedDoubleBuffer
+                | ControlStyles.AllPaintingInWmPaint 
+                | ControlStyles.UserPaint, true);
+            UpdateStyles();
+
         }
 
         private void Tetris_Load(object sender, EventArgs e)
         {
             this.scoreTetrisViewTableAdapter.Fill(this.scoreTetrisDataSet.ScoreTetrisView);
-
+            this.DoubleBuffered = true;
             score = new Score(this);
             main = new MainMenu() {Owner = this };
             game = Game.GetInstance(this,score);
@@ -39,12 +44,16 @@ namespace Tetris
         public void Main()
         {
             timer.Start();
+            score.HideScore();
+            main.Refresh();
             switch (main.ShowDialog())
             {
                 case DialogResult.OK:
-                    main.Hide();
+                    main.Update();
                     game.Autoplay = false;
                     game.Restart();
+                    main.Hide();
+                    this.Focus();
                     return;
                 case DialogResult.Abort:
                     Application.Exit();
@@ -53,7 +62,7 @@ namespace Tetris
                     main.Hide();
                     this.scoreTetrisViewTableAdapter.Fill(this.scoreTetrisDataSet.ScoreTetrisView);
                     score.ShowScore();
-                    break;
+                    return;
 
 
             }
@@ -65,5 +74,9 @@ namespace Tetris
             Main();
         }
 
+        private void Tetris_Paint(object sender, PaintEventArgs e)
+        {
+            game.DrawGrid(e.Graphics);
+        }
     }
 }

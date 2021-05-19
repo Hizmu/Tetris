@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cell.cs" />
+    <Compile Include="Controls\Animation.cs" />
+    <Compile Include="Controls\Animator.cs" />
+    <Compile Include="Controls\Drawer.cs" />
+    <Compile Include="Controls\ButtinN.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,10 +66,20 @@
     <Compile Include="PauseMenu.Designer.cs">
       <DependentUpon>PauseMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="Score.cs" />
     <Compile Include="ScoreTetrisDataSet.Designer.cs">
@@ -89,19 +106,18 @@
     <EmbeddedResource Include="PauseMenu.resx">
       <DependentUpon>PauseMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tetris.resx">
       <DependentUpon>Tetris.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -122,11 +138,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\BlueBlock.png" />
-    <Content Include="Resources\GreenBlock.png" />
-    <Content Include="Resources\PurpleBlock.png" />
-    <Content Include="Resources\RedBlock.png" />
-    <Content Include="Resources\YellowBlock.png" />
+    <Content Include="Resources\Backgraund\1.jpg" />
+    <Content Include="Resources\Backgraund\2.jpg" />
+    <Content Include="Resources\Blocks\BlueBlock.png" />
+    <Content Include="Resources\Blocks\GreenBlock.png" />
+    <Content Include="Resources\Blocks\PurpleBlock.png" />
+    <Content Include="Resources\Blocks\RedBlock.png" />
+    <Content Include="Resources\Blocks\YellowBlock.png" />
+    <Content Include="Resources\Music\music_1.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

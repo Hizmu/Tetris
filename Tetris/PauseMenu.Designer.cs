@@ -29,63 +29,118 @@ namespace Tetris
         /// </summary>
         private void InitializeComponent()
         {
-            this.btContinue = new System.Windows.Forms.Button();
-            this.btToMenu = new System.Windows.Forms.Button();
-            this.btExit = new System.Windows.Forms.Button();
+            this.btContinue = new ButtonN();
+            this.btToMenu = new ButtonN();
+            this.btExit = new ButtonN();
             this.SuspendLayout();
             // 
             // btContinue
             // 
+
+            this.btContinue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btContinue.BackColorAdditional = System.Drawing.Color.Magenta;
+            this.btContinue.BackColorGradientEnabled = true;
+            this.btContinue.BackColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
+            this.btContinue.BorderColor = System.Drawing.Color.Transparent;
+            this.btContinue.BorderColorEnabled = false;
+            this.btContinue.BorderColorOnHover = System.Drawing.Color.Transparent;
+            this.btContinue.BorderColorOnHoverEnabled = false;
+            this.btContinue.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btContinue.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btContinue.Location = new System.Drawing.Point(41, 40);
+            this.btContinue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btContinue.ForeColor = System.Drawing.Color.White;
+            this.btContinue.Location = new System.Drawing.Point(18, 33);
             this.btContinue.Name = "btContinue";
-            this.btContinue.Size = new System.Drawing.Size(90, 23);
+            this.btContinue.RippleColor = System.Drawing.Color.Transparent;
+            this.btContinue.RoundingEnable = true;
+            this.btContinue.Size = new System.Drawing.Size(130, 30);
             this.btContinue.TabIndex = 0;
             this.btContinue.Text = "Продовжити";
-            this.btContinue.UseVisualStyleBackColor = true;
+            this.btContinue.TextHover = null;
+            this.btContinue.UseDownPressEffectOnClick = true;
+            this.btContinue.UseRippleEffect = true;
+            this.btContinue.UseVisualStyleBackColor = false;
+            this.btContinue.UseZoomEffectOnHover = false;
             // 
             // btToMenu
             // 
+            
+            this.btToMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+
+            this.btToMenu.BackColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(00)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btToMenu.BackColorGradientEnabled = true;
+            this.btToMenu.BackColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
+            this.btToMenu.BorderColor = System.Drawing.Color.Transparent;
+            this.btToMenu.BorderColorEnabled = false;
+            this.btToMenu.BorderColorOnHover = System.Drawing.Color.Transparent;
+            this.btToMenu.BorderColorOnHoverEnabled = false;
+            this.btToMenu.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btToMenu.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btToMenu.Location = new System.Drawing.Point(41, 79);
+            this.btToMenu.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btToMenu.ForeColor = System.Drawing.Color.White;
+            this.btToMenu.Location = new System.Drawing.Point(18, 69);
             this.btToMenu.Name = "btToMenu";
-            this.btToMenu.Size = new System.Drawing.Size(90, 23);
+            this.btToMenu.RippleColor = System.Drawing.Color.Transparent;
+            this.btToMenu.RoundingEnable = true;
+            this.btToMenu.Size = new System.Drawing.Size(130, 33);
             this.btToMenu.TabIndex = 1;
             this.btToMenu.Text = "Головне меню";
-            this.btToMenu.UseVisualStyleBackColor = true;
+            this.btToMenu.TextHover = null;
+            this.btToMenu.UseDownPressEffectOnClick = true;
+            this.btToMenu.UseRippleEffect = true;
+            this.btToMenu.UseVisualStyleBackColor = false;
+            this.btToMenu.UseZoomEffectOnHover = false;
             // 
             // btExit
             // 
+            this.btExit.BackColor = System.Drawing.Color.Tomato;
+            this.btExit.BackColorAdditional = System.Drawing.Color.CornflowerBlue;
+            this.btExit.BackColorGradientEnabled = true;
+            this.btExit.BackColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
+            this.btExit.BorderColor = System.Drawing.Color.Black;
+            this.btExit.BorderColorEnabled = true;
+            this.btExit.BorderColorOnHover = System.Drawing.Color.Transparent;
+            this.btExit.BorderColorOnHoverEnabled = false;
+            this.btExit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btExit.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.btExit.Location = new System.Drawing.Point(41, 119);
+            this.btExit.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btExit.ForeColor = System.Drawing.Color.White;
+            this.btExit.Location = new System.Drawing.Point(18, 108);
             this.btExit.Name = "btExit";
-            this.btExit.Size = new System.Drawing.Size(90, 23);
+            this.btExit.RippleColor = System.Drawing.Color.Transparent;
+            this.btExit.RoundingEnable = true;
+            this.btExit.Size = new System.Drawing.Size(130, 34);
             this.btExit.TabIndex = 2;
             this.btExit.Text = "Вихід";
-            this.btExit.UseVisualStyleBackColor = true;
+            this.btExit.TextHover = null;
+            this.btExit.UseDownPressEffectOnClick = true;
+            this.btExit.UseRippleEffect = true;
+            this.btExit.UseVisualStyleBackColor = false;
+            this.btExit.UseZoomEffectOnHover = false;
             // 
-            // StopMenu
+            // PauseMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(175, 200);
-            this.ControlBox = false;
             this.Controls.Add(this.btExit);
             this.Controls.Add(this.btToMenu);
             this.Controls.Add(this.btContinue);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
-            this.Name = "StopMenu";
+            this.Name = "PauseMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "StopMenu";
+            this.TransparencyKey = this.BackColor;
             this.ResumeLayout(false);
-
+            this.PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.Button btContinue;
-        private System.Windows.Forms.Button btToMenu;
-        private System.Windows.Forms.Button btExit;
+        private ButtonN btContinue;
+        private ButtonN btToMenu;
+        private ButtonN btExit;
     }
 }

@@ -24,6 +24,6 @@ namespace Tetris
         public static int startSpeed { get { return 1000; } }
         public static int autoGameSpeed { get { return 600; } }
 
-        public static string conn_Score = @"Data Source=(local)\SQLEXPRESS;Initial Catalog=Score;Integrated Security=True;Pooling=False";
+        public static string conn_Score = @"Data Source=(local)\SQLEXPRESS;Initial Catalog=ScoreTetris;Integrated Security=True;Pooling=False";
     }
 }

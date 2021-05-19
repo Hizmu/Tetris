@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Tetris
-{
-
+{ 
     class Game
     {
         int currentX = 0;
@@ -23,6 +23,7 @@ namespace Tetris
         private static Game game;
         private static Tetris tetris;
         private static Score score;
+        private static SoundPlayer soundPlayer;
         public bool Autoplay { get; set; }
         private Game()
         {
@@ -31,6 +32,9 @@ namespace Tetris
                 for (int j = 0; j < gridHeight; j++)
                     grid[i, j] = new Cell();
             LoadImage.LoadBlocksFromImage();
+            soundPlayer = new SoundPlayer(Resource.music_1);
+           
+            soundPlayer.PlayLooping();
         }
 
         public void Start()
@@ -73,6 +77,7 @@ namespace Tetris
         }
         public void Time_Tick(object sender, EventArgs e)
         {
+            
             if (!moveShapeIfPossible(moveDown: 1))
             {
                 nextShape.Hide();
@@ -82,6 +87,7 @@ namespace Tetris
                 clearFilledRowsAndUpdateScore();
 
             }
+            tetris.Refresh();
         }
         public static Game GetInstance(Tetris tetris,Score score)
         {
@@ -109,6 +115,7 @@ namespace Tetris
                 {
                     if (newY + j > 0 && grid[newX + i, newY + j] == 1 && currentShape.Blocks[j, i] == 1)
                     {
+
                         return false;
                     }
                 }
@@ -116,9 +123,7 @@ namespace Tetris
 
             currentX = newX;
             currentY = newY;
-
             drawShape();
-
             return true;
         }
 
@@ -168,7 +173,8 @@ namespace Tetris
                 {
                     MessageBox.Show(tetris,"Game Over");
                     Autoplay = true;
-               //     score.PushScore();
+                    score.PushScore();
+                    score.Clear();
                     Restart();
                     tetris.Main();
                 }
@@ -225,7 +231,9 @@ namespace Tetris
                     tetris.timer.Start();
                     return;
                 case DialogResult.Cancel:
-                    Application.Exit();
+                    Autoplay = true;
+                    Restart();
+                    tetris.Main();
                     return;             
                 case DialogResult.Abort:
                     Application.Exit();
@@ -248,7 +256,7 @@ namespace Tetris
                 {
 
                     score += 100;
-                    tetris.lbScore.Text = "Score: " + score;
+                    tetris.lbScore.Text = "Score: " + score.score;
                     tetris.lbLevel.Text = "Level: " + score.score / 100;
 
                     tetris.timer.Interval -= (int)Setting.Difficult;
@@ -304,6 +312,17 @@ namespace Tetris
             shape.Show();
             shape.AddToControls(tetris);
             return shape;
+        }
+        public void DrawGrid(Graphics g)
+        {
+            for (int i = 0; i <= Setting.gridHeight; i++)
+            {
+                g.DrawLine(Pens.Black, new Point(Setting.startpositionX, Setting.startpositionY + i * Setting.blockSize), new Point(Setting.startpositionX + Setting.gridWidth * Setting.blockSize, Setting.startpositionY + i * Setting.blockSize));
+            }
+            for (int i = 0; i <= Setting.gridWidth; i++)
+            {
+                g.DrawLine(Pens.Black, new Point(Setting.startpositionX + i * Setting.blockSize, Setting.startpositionX), new Point(Setting.startpositionY + i * Setting.blockSize, Setting.startpositionY + Setting.gridHeight * Setting.blockSize));
+            }
         }
 
     }

@@ -23,11 +23,11 @@ namespace Tetris
         public static void LoadBlocksFromImage()
         {
             LoadImage.standartblocks = new Dictionary<ColorBlock, Bitmap>();
-            standartblocks.Add(ColorBlock.Blue,  global::Tetris.Properties.Resources.BlueBlock );
-            standartblocks.Add(ColorBlock.Red, global::Tetris.Properties.Resources.RedBlock);
-            standartblocks.Add(ColorBlock.Yellow, global::Tetris.Properties.Resources.YellowBlock );
-            standartblocks.Add(ColorBlock.Purple, global::Tetris.Properties.Resources.PurpleBlock );
-            standartblocks.Add(ColorBlock.Green, global::Tetris.Properties.Resources.GreenBlock );
+            standartblocks.Add(ColorBlock.Blue,  Resource.BlueBlock );
+            standartblocks.Add(ColorBlock.Red, Resource.RedBlock);
+            standartblocks.Add(ColorBlock.Yellow, Resource.YellowBlock );
+            standartblocks.Add(ColorBlock.Purple, Resource.PurpleBlock );
+            standartblocks.Add(ColorBlock.Green, Resource.GreenBlock );
         }
     }
 }

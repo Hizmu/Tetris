@@ -1,5 +1,6 @@
 ﻿
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Tetris
 {
@@ -31,61 +32,116 @@ namespace Tetris
         /// </summary>
         private void InitializeComponent()
         {
-            this.btStart = new System.Windows.Forms.Button();
-            this.btTableScore = new System.Windows.Forms.Button();
-            this.btExit = new System.Windows.Forms.Button();
             this.tbName = new System.Windows.Forms.TextBox();
+            this.btScore = new ButtonN();
+            this.btExit = new ButtonN();
+            this.btStart = new ButtonN();
             this.SuspendLayout();
-            // 
-            // btStart
-            // 
-            this.btStart.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btStart.Location = new System.Drawing.Point(68, 38);
-            this.btStart.Name = "btStart";
-            this.btStart.Size = new System.Drawing.Size(114, 23);
-            this.btStart.TabIndex = 0;
-            this.btStart.Text = "Старт";
-            this.btStart.UseVisualStyleBackColor = true;
-            this.btStart.Click += new System.EventHandler(this.btStart_Click);
-            // 
-            // btTableScore
-            // 
-            this.btTableScore.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btTableScore.Location = new System.Drawing.Point(128, 67);
-            this.btTableScore.Name = "btTableScore";
-            this.btTableScore.Size = new System.Drawing.Size(114, 23);
-            this.btTableScore.TabIndex = 1;
-            this.btTableScore.Text = "Таблиця рекордів";
-            this.btTableScore.UseVisualStyleBackColor = true;
-            // 
-            // btExit
-            // 
-            this.btExit.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.btExit.Location = new System.Drawing.Point(2, 67);
-            this.btExit.Name = "btExit";
-            this.btExit.Size = new System.Drawing.Size(114, 23);
-            this.btExit.TabIndex = 2;
-            this.btExit.Text = "Вихід";
-            this.btExit.UseVisualStyleBackColor = true;
             // 
             // tbName
             // 
+            this.tbName.BackColor = this.BackColor;
             this.tbName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbName.ForeColor = System.Drawing.SystemColors.Window;
             this.tbName.Location = new System.Drawing.Point(68, 12);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(114, 13);
+            this.tbName.Size = new System.Drawing.Size(114, 22);
             this.tbName.TabIndex = 3;
-            this.tbName.Text = "Введіть ім\'я гравця";
+            this.tbName.Text = "Player";
+            this.tbName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbName_KeyPress);
+            // 
+            // btScore
+            // 
+            this.btScore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(147)))), ((int)(((byte)(233)))));
+            this.btScore.BackColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            this.btScore.BackColorGradientEnabled = true;
+            this.btScore.BackColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
+            this.btScore.BorderColor = System.Drawing.Color.Black;
+            this.btScore.BorderColorEnabled = true;
+            this.btScore.BorderColorOnHover = System.Drawing.Color.Transparent;
+            this.btScore.BorderColorOnHoverEnabled = false;
+            this.btScore.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btScore.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btScore.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btScore.ForeColor = System.Drawing.Color.White;
+            this.btScore.Location = new System.Drawing.Point(68, 84);
+            this.btScore.Name = "btScore";
+            this.btScore.RippleColor = System.Drawing.Color.Transparent;
+            this.btScore.RoundingEnable = true;
+            this.btScore.Size = new System.Drawing.Size(114, 30);
+            this.btScore.TabIndex = 6;
+            this.btScore.Text = "Score";
+            this.btScore.TextHover = null;
+            this.btScore.UseDownPressEffectOnClick = true;
+            this.btScore.UseRippleEffect = true;
+            this.btScore.UseVisualStyleBackColor = false;
+            this.btScore.UseZoomEffectOnHover = false;
+            // 
+            // btExit
+            // 
+            this.btExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(60)))), ((int)(((byte)(172)))));
+            this.btExit.BackColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(160)))), ((int)(((byte)(153)))));
+            this.btExit.BackColorGradientEnabled = true;
+            this.btExit.BackColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
+            this.btExit.BorderColor = System.Drawing.Color.Black;
+            this.btExit.BorderColorEnabled = true;
+            this.btExit.BorderColorOnHover = System.Drawing.Color.Transparent;
+            this.btExit.BorderColorOnHoverEnabled = false;
+            this.btExit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btExit.DialogResult = System.Windows.Forms.DialogResult.Abort;
+            this.btExit.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btExit.ForeColor = System.Drawing.Color.White;
+            this.btExit.Location = new System.Drawing.Point(68, 127);
+            this.btExit.Name = "btExit";
+            this.btExit.RippleColor = System.Drawing.Color.Red;
+            this.btExit.RoundingEnable = true;
+            this.btExit.Size = new System.Drawing.Size(114, 30);
+            this.btExit.TabIndex = 5;
+            this.btExit.Text = "Exit";
+            this.btExit.TextHover = null;
+            this.btExit.UseDownPressEffectOnClick = true;
+            this.btExit.UseRippleEffect = true;
+            this.btExit.UseVisualStyleBackColor = false;
+            this.btExit.UseZoomEffectOnHover = false;
+            // 
+            // btStart
+            // 
+            this.btStart.BackColor = System.Drawing.Color.Red;
+            this.btStart.BackColorAdditional = System.Drawing.Color.Yellow;
+            this.btStart.BackColorGradientEnabled = true;
+            this.btStart.BackColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
+            this.btStart.BorderColor = System.Drawing.Color.Tomato;
+            this.btStart.BorderColorEnabled = false;
+            this.btStart.BorderColorOnHover = System.Drawing.Color.Tomato;
+            this.btStart.BorderColorOnHoverEnabled = false;
+            this.btStart.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btStart.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btStart.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btStart.ForeColor = System.Drawing.Color.White;
+            this.btStart.Location = new System.Drawing.Point(68, 47);
+            this.btStart.Name = "btStart";
+            this.btStart.RippleColor = System.Drawing.Color.Black;
+            this.btStart.RoundingEnable = true;
+            this.btStart.Size = new System.Drawing.Size(114, 31);
+            this.btStart.TabIndex = 0;
+            this.btStart.Text = "Start";
+            this.btStart.TextHover = null;
+            this.btStart.UseDownPressEffectOnClick = true;
+            this.btStart.UseRippleEffect = true;
+            this.btStart.UseVisualStyleBackColor = false;
+            this.btStart.UseZoomEffectOnHover = false;
+            this.btStart.Click += new System.EventHandler(this.btStart_Click);
             // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(254, 102);
-            this.Controls.Add(this.tbName);
+            this.ClientSize = new System.Drawing.Size(254, 169);
+            this.Controls.Add(this.btScore);
             this.Controls.Add(this.btExit);
-            this.Controls.Add(this.btTableScore);
             this.Controls.Add(this.btStart);
+            this.Controls.Add(this.tbName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.Name = "MainMenu";
@@ -98,10 +154,9 @@ namespace Tetris
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btStart;
-        private System.Windows.Forms.Button btTableScore;
-        private System.Windows.Forms.Button btExit;
         public System.Windows.Forms.TextBox tbName;
+        private ButtonN btStart;
+        private ButtonN btExit;
+        private ButtonN btScore;
     }
 }
