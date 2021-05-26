@@ -6,7 +6,7 @@ namespace Tetris
 {
     class Score
     {
-        Tetris tetris;
+        private Tetris tetris;
         public int score { get; private set; }
 
         public Score(Tetris tetris) { this.tetris = tetris; }
@@ -16,35 +16,42 @@ namespace Tetris
             string cmd = null;
             string queryString = "SELECT * FROM dbo.ScoreTetris;";
             cmd = $@"INSERT INTO dbo.ScoreTetris VALUES('{Nickname}','{score}') ";
-            using (SqlConnection connection = new SqlConnection(Setting.conn_Score))
+            try
             {
-                connection.Open();
-                SqlCommand sqlCommand = new SqlCommand(queryString, connection);
-                SqlDataReader sqlData = sqlCommand.ExecuteReader();
-                while(sqlData.Read())
+                using (SqlConnection connection = new SqlConnection(Setting.conn_Score))
                 {
-
-                    if ((string)sqlData.GetValue(0) == Nickname)
+                    connection.Open();
+                    SqlCommand sqlCommand = new SqlCommand(queryString, connection);
+                    SqlDataReader sqlData = sqlCommand.ExecuteReader();
+                    while (sqlData.Read())
                     {
 
-                        if((int)sqlData.GetValue(1) >= score)
+                        if ((string)sqlData.GetValue(0) == Nickname)
                         {
+
+                            if ((int)sqlData.GetValue(1) >= score)
+                            {
+                                sqlData.Close();
+                                return;
+                            }
                             sqlData.Close();
-                            return;
-                        }
-                        sqlData.Close();
-                        cmd = $@"UPDATE dbo.ScoreTetris SET
+                            cmd = $@"UPDATE dbo.ScoreTetris SET
                         Score = '{score}'
                         WHERE Nickname = '{Nickname}'";
-                        sqlCommand = new SqlCommand(cmd, connection);
-                        sqlCommand.ExecuteNonQuery();
-                        return;
+                            sqlCommand = new SqlCommand(cmd, connection);
+                            sqlCommand.ExecuteNonQuery();
+                            return;
+                        }
                     }
-                }
-                sqlData.Close();
-                sqlCommand = new SqlCommand(cmd, connection);
-                sqlCommand.ExecuteNonQuery();
+                    sqlData.Close();
+                    sqlCommand = new SqlCommand(cmd, connection);
+                    sqlCommand.ExecuteNonQuery();
 
+                }
+            }
+            catch(Exception)
+            {
+                return;
             }
         }
         public void Clear()

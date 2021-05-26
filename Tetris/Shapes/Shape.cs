@@ -1,32 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
+// Shape.cs
 namespace Tetris
 {
-    class Shape
+    abstract class Shape
     {
-        public Shape(){}
-        public Shape(Shape shape) 
+
+        // Розмір масиву Blocks
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int[,] Blocks { get; set; }
+
+        // Малюнки які буду переміщуватись
+        public PictureBox [] imgBlocks { get; set; }
+
+        private int[,] backupBlocks { get; set; }
+
+        public Shape() { }
+        public Shape(Shape shape)
         {
             this.Width = shape.Width;
             this.Height = shape.Height;
-            this.count = count;
             this.Blocks = shape.Blocks;
         }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        abstract public Shape Clone();
 
-        public PictureBox [] imgBlocks { get; set; }
-        public int count { get; set; }
-        public int[,] Blocks{ get; set; }
-        private int[,] backupBlocks { get; set; }
-
-        public void InitPictureBox(PictureBox picture)
+        public void InitPictureBox(PictureBox picture,int count)
         {
             if (count == 0 || picture == null || picture.Image == null)
                 return;
@@ -37,6 +37,33 @@ namespace Tetris
                 imgBlocks[i] = new PictureBox() { Image = new Bitmap(picture.Image), Visible = picture.Visible, Width = picture.Width, Height = picture.Height };
             }
             picture.Dispose();
+        }
+        public void Turn()
+        {
+
+            backupBlocks = Blocks;
+
+            Blocks = new int[Width, Height];
+
+            for (int i = 0; i < Width; i++)
+            {
+                for (int j = 0; j < Height; j++)
+                {
+                    Blocks[i, j] = backupBlocks[Height - 1 - j, i];
+                }
+            }
+
+            var temp = Width;
+            Width = Height;
+            Height = temp;
+        }
+        public void Rollback()
+        {
+            Blocks = backupBlocks;
+
+            var temp = Width;
+            Width = Height;
+            Height = temp;
         }
         public void Hide()
         {
@@ -66,32 +93,6 @@ namespace Tetris
                 tetris.Controls.Remove(image);
             }
         }
-        public void turn()
-        {
 
-            backupBlocks = Blocks;
-
-            Blocks = new int[Width, Height];
-
-            for (int i = 0; i < Width; i++)
-            {
-                for (int j = 0; j < Height; j++)
-                {
-                    Blocks[i, j] = backupBlocks[Height - 1 - j, i];
-                }
-            }
-
-            var temp = Width;
-            Width = Height;
-            Height = temp;
-        }
-        public void rollback()
-        {
-            Blocks = backupBlocks;
-
-            var temp = Width;
-            Width = Height;
-            Height = temp;
-        }
     }
 }

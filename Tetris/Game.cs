@@ -1,29 +1,26 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
+// Game.cs
 namespace Tetris
 { 
     class Game
     {
-        int currentX = 0;
-        int currentY = 0;
-        int gridWidth = Setting.gridWidth;
-        int gridHeight = Setting.gridHeight;
-        Cell[,] grid = null;
-        Shape currentShape  = null;
-        Shape nextShape = null;
-        private static Game game;
+        private int currentX = 0;
+        private int currentY = 0;
+        private int gridWidth = Setting.gridWidth;
+        private int gridHeight = Setting.gridHeight;
+        private bool Is_Tick = false;
+        private Cell[,] grid = null;
+        private Shape currentShape  = null;
+        private Shape nextShape = null;
+        private static Game instance;
         private static Tetris tetris;
         private static Score score;
         private static SoundPlayer soundPlayer;
+
         public bool Autoplay { get; set; }
         private Game()
         {
@@ -36,17 +33,29 @@ namespace Tetris
            
             soundPlayer.PlayLooping();
         }
+        public static Game getInstance(Tetris tetris = null, Score score = null)
+        {
+            if (instance == null)
+            {
+                if (tetris == null || score == null)
+                    return null;
+                instance = new Game();
+                Game.score = score;
+                Game.tetris = tetris;
+            }
+            return instance;
+        }
 
         public void Start()
         {
-            tetris.timer.Tick += game.Time_Tick;
+            tetris.timer.Tick += instance.Time_Tick;
             if (Autoplay)
                 tetris.timer.Interval = Setting.autoGameSpeed;
             else
             {
                 tetris.timer.Interval = Setting.startSpeed;
             }
-            tetris.KeyDown += game.Key_Down;
+            tetris.KeyDown += instance.Key_Down;
             currentShape = getRandomShapeCenter();
             nextShape = getNextShape();
             currentShape.AddToControls(tetris);
@@ -54,6 +63,8 @@ namespace Tetris
         public void Restart()
         {
             tetris.timer.Stop();
+            tetris.lbScore.Text = "Score: 0";
+            tetris.lbLevel.Text = "Level: 0";
             currentShape.RemoveFromControl(tetris);
             nextShape.RemoveFromControl(tetris);
             ClearGrid();
@@ -75,9 +86,9 @@ namespace Tetris
                     }
                 }
         }
-        public void Time_Tick(object sender, EventArgs e)
+        private void Time_Tick(object sender, EventArgs e)
         {
-            
+            Is_Tick = true;
             if (!moveShapeIfPossible(moveDown: 1))
             {
                 nextShape.Hide();
@@ -85,19 +96,10 @@ namespace Tetris
                 currentShape = nextShape;
                 nextShape = getNextShape();
                 clearFilledRowsAndUpdateScore();
+            }
+            Is_Tick = false; 
+        }
 
-            }
-        }
-        public static Game GetInstance(Tetris tetris,Score score)
-        {
-            if (game == null)
-            {
-                game = new Game();
-                Game.score = score;
-                Game.tetris = tetris;
-            }
-            return game;
-        }
 
         private bool moveShapeIfPossible(int moveDown = 0, int moveSide = 0)
         {
@@ -121,11 +123,11 @@ namespace Tetris
 
             currentX = newX;
             currentY = newY;
-            drawShape();
+            moveShape();
             return true;
         }
 
-        public void drawShape()
+        private void moveShape()
         {
             int k = 0;
             for (int i = 0; i < currentShape.Width; i++)
@@ -184,9 +186,10 @@ namespace Tetris
             }
             return false;
         }
-        public void Key_Down(object sender, KeyEventArgs e)
+        private void Key_Down(object sender, KeyEventArgs e)
         {
-
+            if (Is_Tick)
+                return;
             var verticalMove = 0;
             var horizontalMove = 0;
             switch (e.KeyCode)
@@ -206,7 +209,7 @@ namespace Tetris
                 case Keys.W:
                 case Keys.Space:
                 case Keys.Up:
-                    currentShape.turn();
+                    currentShape.Turn();
                     break;
                 case Keys.Escape:
                     tetris.timer.Stop();
@@ -216,7 +219,7 @@ namespace Tetris
             }
             if (!moveShapeIfPossible(horizontalMove, verticalMove) && (e.KeyCode == Keys.Up || e.KeyCode == Keys.Space || e.KeyCode == Keys.W))
             {
-                currentShape.rollback();
+                currentShape.Rollback();
             }
         }
         public void Pause()
@@ -239,7 +242,7 @@ namespace Tetris
 
             }
         }
-        public void clearFilledRowsAndUpdateScore()
+        private void clearFilledRowsAndUpdateScore()
         {
             for (int i = 0; i < gridHeight; i++)
             {
@@ -290,7 +293,7 @@ namespace Tetris
             return shape;
         }
 
-        public Shape getNextShape()
+        private Shape getNextShape()
         {
             int k = 0;
             var shape = getRandomShapeCenter();

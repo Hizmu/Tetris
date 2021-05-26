@@ -1,123 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+// ShapesHandler.cs
 namespace Tetris
 {
     static class ShapesHandler
     {
-        private static Shape[] shapesArray;
+        // зберігаються шаблонні фігури
+        private static List<Shape> shapesArray = new List<Shape>();
         private static Random random = new Random();
-        static ShapesHandler()
+        static ShapesHandler() { }
+        public static void AddTemplateShape(Shape shape)
         {
-            shapesArray = new Shape[]
-                {
-                    new Shape {
-                        Width = 2,
-                        Height = 2,
-                        Blocks = new int[,]
-                        {
-                            { 1, 1 },
-                            { 1, 1 }
-                        }
-                    },
-                    new Shape {
-                        Width = 1,
-                        Height = 4,
-                        Blocks = new int[,]
-                        {
-                            { 1 },
-                            { 1 },
-                            { 1 },
-                            { 1 }
-                        }
-                    },
-                    new Shape {
-                        Width = 3,
-                        Height = 2,
-                        Blocks = new int[,]
-                        {
-                            { 0, 1, 0 },
-                            { 1, 1, 1 }
-                        }
-                    },
-                    new Shape {
-                        Width = 3,
-                        Height = 2,
-                        Blocks = new int[,]
-                        {
-                            { 0, 0, 1 },
-                            { 1, 1, 1 }
-                        }
-                    },
-                    new Shape {
-                        Width = 3,
-                        Height = 2,
-                        Blocks = new int[,]
-                        {
-                            { 1, 0, 0 },
-                            { 1, 1, 1 }
-                        }
-                    },
-                    new Shape {
-                        Width = 3,
-                        Height = 2,
-                        Blocks = new int[,]
-                        {
-                            { 1, 1, 0 },
-                            { 0, 1, 1 }
-                        }
-                    },
-                    new Shape {
-                        Width = 3,
-                        Height = 2,
-                        Blocks = new int[,]
-                        {
-                            { 0, 1, 1 },
-                            { 1, 1, 0 }
-                        }
-                    },
-
-                    new Shape {
-                        Width = 1,
-                        Height = 1,
-                        Blocks = new int[,]
-                        {
-                            { 1}
-                        }
-                    },
-                    new Shape {
-                        Width = 2,
-                        Height = 2,
-                        Blocks = new int[,]
-                        {
-                            { 1,1},
-                            { 1,0}
-                        }
-                    },
-                    new Shape {
-                        Width = 1,
-                        Height = 2,
-                        Blocks = new int[,]
-                        {
-                            { 1},
-                            { 1}
-                        }
-                    },
-                };
+            shapesArray.Add(shape);
         }
         public static Shape GetRandomShape()
         {
-            
-            Shape shape = new Shape(shapesArray[random.Next(shapesArray.Length)]);
+ 
+            Shape shape = shapesArray[random.Next(shapesArray.Count)].Clone();
+          
             Image image = LoadImage.standartblocks[((ColorBlock)(random.Next(LoadImage.standartblocks.Count) ))];
+            int count = 0;
             foreach(var i in shape.Blocks)
                 if (i == 1)
                 {
-                    shape.count++;
+                    count++;
                 }
 
-            shape.InitPictureBox(new PictureBox(){ Image = new Bitmap(image), Visible = false, Width = Setting.blockSize, Height = Setting.blockSize });
+            shape.InitPictureBox(new PictureBox(){ Image = new Bitmap(image), Visible = false, Width = Setting.blockSize, Height = Setting.blockSize }, count);
             return shape;
         }
     }

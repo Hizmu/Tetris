@@ -18,11 +18,12 @@ namespace Tetris
     }
     static class LoadImage
     {
-        public static Dictionary<ColorBlock, Bitmap> standartblocks { get; private set; }
-    
+        public static Dictionary<ColorBlock, Image> standartblocks { get; private set; }
+
+        // Завантаження зображення
         public static void LoadBlocksFromImage()
         {
-            LoadImage.standartblocks = new Dictionary<ColorBlock, Bitmap>();
+            LoadImage.standartblocks = new Dictionary<ColorBlock, Image>();
             standartblocks.Add(ColorBlock.Blue,  Resource.BlueBlock );
             standartblocks.Add(ColorBlock.Red, Resource.RedBlock);
             standartblocks.Add(ColorBlock.Yellow, Resource.YellowBlock );

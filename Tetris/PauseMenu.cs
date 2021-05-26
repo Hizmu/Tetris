@@ -16,7 +16,6 @@ namespace Tetris
         {
             InitializeComponent();
             this.Focus();
-            Invalidate();
         }
     }
 }

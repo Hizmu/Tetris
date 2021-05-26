@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
+// Tetris.cs
 namespace Tetris
 {
     public partial class Tetris : Form
@@ -24,7 +18,7 @@ namespace Tetris
                 | ControlStyles.UserPaint, true);
             this.DoubleBuffered = true;
             UpdateStyles();
-
+            InitShapes();
         }
 
         private void Tetris_Load(object sender, EventArgs e)
@@ -32,11 +26,22 @@ namespace Tetris
 
             score = new Score(this);
             main = new MainMenu() {Owner = this };
-            game = Game.GetInstance(this,score);
+            game = Game.getInstance(this,score);
             game.Autoplay = true;
             game.Start();
         }
-
+        private void InitShapes()
+        {
+            ShapesHandler.AddTemplateShape(new ShapeI());
+            ShapesHandler.AddTemplateShape(new ShapeO());
+            ShapesHandler.AddTemplateShape(new ShapeJ());
+            ShapesHandler.AddTemplateShape(new ShapeL());
+            ShapesHandler.AddTemplateShape(new ShapeZ());
+            ShapesHandler.AddTemplateShape(new ShapeS());
+            ShapesHandler.AddTemplateShape(new ShapeDot());
+            ShapesHandler.AddTemplateShape(new Shapeil());
+            ShapesHandler.AddTemplateShape(new ShapeLl());
+        }
         private void Tetris_Shown(object sender, EventArgs e)
         {
             Main();
